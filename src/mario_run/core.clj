@@ -5,22 +5,22 @@
 (defn setup []
   {:mario (load-image "resources/mario.png")
    :background (load-image "resources/background.jpg")
-   :y-param 10})
+   :pos {:x 10 :y 10}})
 
-; (defn update [state]
-;   (if (<= (:y-param state) 300)
-;     (update-in state [:y-param] inc)))
+(defn update_pos [state]
+  (if (<= (:x (:pos state)) 300)
+    (update-in state [:pos :x] inc)))    
 
+(defn draw [state]
+  (println (:pos state))
+  (background-image (:background state))
+  (resize (:mario state) 72 98)
+  (image (:mario state) (:x (:pos state)) (:y (:pos state))))
 
-(defn draw []
-  (background-image (:background)))
-  ; (resize (:mario state) (* 36 2) (* 49 2))
-  ; (image (:mario state) 10 (:y-param state)))
-
-(defsketch example
+(defsketch mario-run
   :title "Example"
   :setup setup
-  ; :update update
+  :update update_pos
   :draw draw
   :middleware [m/fun-mode]
   :size [800 499])
